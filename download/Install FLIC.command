@@ -3,7 +3,7 @@
 #  Install FLIC — double-click this file.
 #
 #  Sets up everything FLIC needs on an Apple Silicon Mac (macOS 14 or newer):
-#    Homebrew, ffmpeg, Node, Python, yt-dlp, Ollama + its AI model, the Whisper
+#    Homebrew, ffmpeg, Node, Python, Ollama + its AI model, yt-dlp, the Whisper
 #    speech model, FLIC itself in ~/FLIC, the folder watcher (starts at login) and
 #    "Start FLIC" / "Stop FLIC" on your Desktop.
 #
@@ -79,11 +79,17 @@ eval "$(/opt/homebrew/bin/brew shellenv)" 2>/dev/null || true
 say "Homebrew ready"
 
 # ── 3. Tools ──────────────────────────────────────────────────────────────────
-step "3/8  ffmpeg, Node, Python, yt-dlp, Ollama"
-for pkg in ffmpeg node python@3.12 yt-dlp ollama; do
-  if brew list --formula "$pkg" >/dev/null 2>&1; then say "$pkg: already installed"
+step "3/8  ffmpeg, Node, Python, Ollama"
+# A tool that is already on this Mac (Ollama.app, a hand-installed ffmpeg, nvm's node, ...)
+# is used as is; brew is only asked for what is missing.
+have() { command -v "$1" >/dev/null 2>&1 || brew list --formula "$2" >/dev/null 2>&1; }
+for pair in ffmpeg:ffmpeg node:node ollama:ollama; do
+  tool="${pair%%:*}"; pkg="${pair##*:}"
+  if have "$tool" "$pkg"; then say "$tool: already installed"
   else say "installing $pkg ..."; run brew install "$pkg" || die "Could not install $pkg."; fi
 done
+if brew list --formula python@3.12 >/dev/null 2>&1; then say "python 3.12: already installed"
+else say "installing python 3.12 ..."; run brew install python@3.12 || die "Could not install Python 3.12."; fi
 PY="$(brew --prefix python@3.12)/bin/python3.12"
 [ -x "$PY" ] || die "Python 3.12 not found after install."
 
@@ -106,7 +112,7 @@ mkdir -p "$FLIC_DIR/input" "$FLIC_DIR/output" "$FLIC_DIR/logs" "$FLIC_DIR/transc
 say "files in place"
 
 # ── 5. Python packages (in FLIC's own folder, nothing else on the Mac is touched) ─
-step "5/8  Python packages (speech, face tracking, audio)"
+step "5/8  Python packages (speech, face tracking, audio, yt-dlp)"
 [ -x "$VENV/bin/python3" ] || run "$PY" -m venv "$VENV" || die "Could not create the Python environment."
 run "$VENV/bin/pip" install --upgrade pip
 run "$VENV/bin/pip" install -r "$FLIC_DIR/engine/installer/requirements.txt" || die "Python packages failed to install. See the log."
@@ -114,7 +120,10 @@ say "done"
 
 # ── 6. AI models ──────────────────────────────────────────────────────────────
 step "6/8  AI models (about 7 GB, one time)"
-run brew services start ollama || true
+if ! curl -s -m 2 http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
+  if [ -d "/Applications/Ollama.app" ]; then open -ga Ollama 2>/dev/null || true
+  else run brew services start ollama || true; fi
+fi
 for _ in $(seq 1 30); do curl -s -m 2 http://127.0.0.1:11434/api/tags >/dev/null 2>&1 && break; sleep 2; done
 curl -s -m 2 http://127.0.0.1:11434/api/tags >/dev/null 2>&1 || die "Ollama (the local AI) did not start. Open Terminal, run: brew services restart ollama, then run this installer again."
 if ollama list 2>/dev/null | grep -q "^${OLLAMA_MODEL}"; then say "$OLLAMA_MODEL: already downloaded"
@@ -134,7 +143,8 @@ say "watcher running; Start FLIC / Stop FLIC are on your Desktop"
 # ── 8. Check ──────────────────────────────────────────────────────────────────
 step "8/8  Self-check"
 PROBLEMS=0
-for t in ffmpeg node yt-dlp ollama; do command -v "$t" >/dev/null 2>&1 || { say "missing: $t"; PROBLEMS=1; }; done
+for t in ffmpeg node ollama; do command -v "$t" >/dev/null 2>&1 || { say "missing: $t"; PROBLEMS=1; }; done
+[ -x "$VENV/bin/yt-dlp" ] || { say "missing: yt-dlp"; PROBLEMS=1; }
 "$VENV/bin/python3" -c "import mlx_whisper, cv2, librosa, yaml" 2>>"$LOG" || { say "a Python package failed to load"; PROBLEMS=1; }
 pgrep -f "engine/scripts/watch.py" >/dev/null || { say "watcher is not running"; PROBLEMS=1; }
 [ "$PROBLEMS" -eq 0 ] || die "Something is missing (see above). Run this installer again; if it still fails, send the log to support."

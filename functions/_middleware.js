@@ -1,9 +1,9 @@
 // Cloudflare Pages middleware: localise prices by the visitor's country.
-// Elements carry data-usd / data-cad text; Canada gets CAD, everyone else USD.
+// Whop charges everyone CA$24.99; Canada sees it plain, everyone else gets a USD hint.
 // Client-side JS in index.html does the same from the timezone as a fallback.
 const PRICES = {
-  CA: { cur: 'CAD', big: '$44.99', note: 'CAD · one-time · no subscription', short: '$44.99 CAD', modal: '$44.99 CAD' },
-  US: { cur: 'USD', big: '$32.99', note: 'USD · one-time · no subscription', short: '$32.99', modal: '$32.99 USD' },
+  CA: { cur: 'CAD', big: '$24.99', note: 'CAD · one-time · no subscription', short: '$24.99 CAD', modal: '$24.99 CAD' },
+  US: { cur: 'CAD', big: '$24.99', note: 'CAD · about US$18 · one-time, no subscription', short: 'CA$24.99', modal: 'CA$24.99 (about US$18)' },
 };
 
 class PriceRewriter {

@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FLIC Guide</title>
+<meta name="description" content="From buying FLIC to posting your first paid clips: every step, in order, in plain words.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#f4f2ea; --text:#0f0f12; --muted:#5f5e67; --acc:#c8f43a; --card:#ffffff; --line:#e4e1d6; --ink:#0a0a0b; --soft:#eceadf; --good:#1f8a4c; --warn:#b7791f; --bad:#c0392b; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg:#0a0a0b; --text:#f4f2ea; --muted:#8f8e97; --acc:#d4ff3f; --card:#151518; --line:#26262b; --ink:#0a0a0b; --soft:#1d1d21; --good:#5ad38a; --warn:#e2b45a; --bad:#ff7a6b; }
+  }
+  :root[data-theme="dark"] { --bg:#0a0a0b; --text:#f4f2ea; --muted:#8f8e97; --acc:#d4ff3f; --card:#151518; --line:#26262b; --ink:#0a0a0b; --soft:#1d1d21; --good:#5ad38a; --warn:#e2b45a; --bad:#ff7a6b; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--text); font:17px/1.6 "Plus Jakarta Sans",-apple-system,sans-serif; -webkit-font-smoothing:antialiased; }
+  main { max-width:680px; margin:0 auto; padding:48px 16px 80px; }
+  .logo { height:32px; display:block; margin-bottom:36px; }
+  h1 { font:800 42px/1.05 "Bricolage Grotesque",sans-serif; letter-spacing:-.03em; margin:0 0 12px; }
+  .lead { color:var(--muted); margin:0 0 28px; font-size:18px; }
+  h2 { font:800 26px/1.15 "Bricolage Grotesque",sans-serif; letter-spacing:-.02em; margin:48px 0 6px; }
+  .sub { color:var(--muted); margin:0 0 18px; }
+  .step { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px 22px 20px 64px; margin-bottom:12px; position:relative; }
+  .step .n { position:absolute; left:20px; top:20px; width:30px; height:30px; border-radius:50%; background:var(--acc); color:var(--ink); font:800 15px/30px "Bricolage Grotesque",sans-serif; text-align:center; }
+  .step h3 { font:700 19px/1.3 "Bricolage Grotesque",sans-serif; margin:2px 0 8px; letter-spacing:-.01em; }
+  .step p { margin:0 0 8px; }
+  .step p:last-child { margin-bottom:0; }
+  code, .path { font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:.88em; background:var(--soft); padding:2px 7px; border-radius:6px; }
+  .path { display:inline-block; margin-top:4px; }
+  .tip { background:var(--soft); border-radius:10px; padding:10px 14px; font-size:15px; color:var(--muted); margin-top:10px; }
+  .tip b { color:var(--text); }
+  .toc { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 8px; }
+  .toc a { text-decoration:none; color:var(--text); background:var(--card); border:1px solid var(--line); border-radius:999px; padding:7px 14px; font-size:14px; font-weight:600; }
+  .toc a:hover { border-color:var(--text); }
+  .verdicts { display:grid; gap:10px; margin-top:10px; }
+  .v { border-radius:12px; padding:12px 14px; background:var(--soft); }
+  .v b { display:block; font-family:"Bricolage Grotesque",sans-serif; font-size:17px; margin-bottom:2px; }
+  .v.go b { color:var(--good); } .v.risky b { color:var(--warn); } .v.skip b { color:var(--bad); }
+  .btn { display:inline-flex; align-items:center; gap:10px; background:var(--ink); color:#f4f2ea; text-decoration:none; font-weight:700; padding:12px 18px; border-radius:12px; font-size:16px; margin-top:6px; }
+  .btn:hover { background:var(--acc); color:var(--ink); }
+  .foot { color:var(--muted); font-size:14px; margin-top:40px; }
+  .foot a { color:inherit; }
+  ul.plain { margin:6px 0 0; padding-left:20px; } ul.plain li { margin-bottom:6px; }
+</style>
+</head>
+<body>
+<main>
+  <a href="/"><img class="logo" src="/logo.svg" alt="FLIC"></a>
+  <h1>How to use FLIC, start to finish</h1>
+  <p class="lead">From buying it to getting paid for clips. Six parts, in order. Each one takes a few minutes of your time; FLIC does the long part by itself.</p>
+
+  <div class="toc">
+    <a href="#install">1 · Install</a>
+    <a href="#campaign">2 · Pick a campaign</a>
+    <a href="#chatgpt">3 · ChatGPT</a>
+    <a href="#video">4 · The video</a>
+    <a href="#run">5 · FLIC runs</a>
+    <a href="#post">6 · Post &amp; get paid</a>
+    <a href="#help">Help</a>
+  </div>
+
+  <h2 id="install">1 · Install FLIC (once)</h2>
+  <p class="sub">About 20–40 minutes, mostly waiting for downloads. You need an Apple Silicon Mac (M1 or newer), macOS 14 or newer, 20 GB free, and internet.</p>
+
+  <div class="step"><span class="n">1</span>
+    <h3>Buy FLIC on Whop and find your license key</h3>
+    <p>After you buy, open your FLIC purchase on Whop. The <b>license key</b> is on that page. Copy it; the installer asks for it.</p>
+    <div class="tip">Can't find it? On whop.com go to your orders, open FLIC, and look for <b>License key</b>.</div>
+  </div>
+
+  <div class="step"><span class="n">2</span>
+    <h3>Download the installer</h3>
+    <p>Go to the download page and click the download button. You get one small file called <code>Install FLIC.command</code>.</p>
+    <a class="btn" href="/download/">Open the download page</a>
+  </div>
+
+  <div class="step"><span class="n">3</span>
+    <h3>Run it and wait</h3>
+    <p>Double-click the file. If macOS says it can't open it, right-click it, choose <b>Open</b>, then <b>Open</b> again.</p>
+    <p>Paste your license key when asked. It may ask for your Mac password once (nothing shows while you type; press Return). Then wait. When it's done, a guide page opens and two buttons appear on your Desktop: <b>Start FLIC</b> and <b>Stop FLIC</b>.</p>
+    <div class="tip">FLIC lives in one folder: <span class="path">~/FLIC</span>. The only folder you'll ever touch is <span class="path">~/FLIC/input</span>.</div>
+  </div>
+
+  <h2 id="campaign">2 · Pick a campaign on Whop</h2>
+  <p class="sub">Campaigns pay you per 1,000 views for clips of someone's content. FLIC is built for them.</p>
+
+  <div class="step"><span class="n">4</span>
+    <h3>Open Content Rewards on Whop</h3>
+    <p>Go to <a href="https://whop.com/discover/" target="_blank" rel="noopener">whop.com/discover</a> and look for the <b>Content Rewards</b> or <b>Clipping</b> section. Each campaign page shows the payout, the platforms, and the rules.</p>
+  </div>
+
+  <div class="step"><span class="n">5</span>
+    <h3>Choose one that fits FLIC</h3>
+    <p>Good signs: a podcast, interview or talking-head creator; "clipping" or "clip the episodes"; you can join without applying; a clear payout per 1,000 views; platforms you have an account on (YouTube Shorts, TikTok, Instagram Reels).</p>
+    <p>Bad signs: "must match our aesthetic", "no simple edits", "edit to the beat", application only, "must use CapCut". FLIC cuts real moments with captions; it doesn't make music-video edits. ChatGPT will catch these in the next part anyway.</p>
+  </div>
+
+  <div class="step"><span class="n">6</span>
+    <h3>Copy the whole brief</h3>
+    <p>On the campaign page, select all of the rules and requirements text and copy it. Everything: payout, platforms, allowed sources, what gets rejected, how to submit. More is better than less.</p>
+  </div>
+
+  <h2 id="chatgpt">3 · Let ChatGPT turn the brief into rules</h2>
+  <p class="sub">Two minutes. This is how FLIC knows what the campaign allows.</p>
+
+  <div class="step"><span class="n">7</span>
+    <h3>Paste the assistant prompt, then the brief</h3>
+    <p>Open this file and copy all of it: <span class="path">~/FLIC/instructions/assistant-prompt.txt</span></p>
+    <p>Go to <a href="https://chatgpt.com" target="_blank" rel="noopener">chatgpt.com</a> (a free or guest chat is fine). Paste the prompt, press Return twice for a blank line, paste the campaign brief underneath, and send.</p>
+  </div>
+
+  <div class="step"><span class="n">8</span>
+    <h3>Read the verdict</h3>
+    <p>The first line of the reply is the verdict:</p>
+    <div class="verdicts">
+      <div class="v go"><b>GO</b> The campaign fits. Carry on.</div>
+      <div class="v risky"><b>RISKY</b> Something in the rules could get clips rejected (for example "no clipping tools" or a warm-up period). FLIC will pause and show you why; you decide.</div>
+      <div class="v skip"><b>SKIP</b> The campaign wants something FLIC doesn't do (a special look, beat edits, application only). Pick another campaign.</div>
+    </div>
+    <div class="tip">If the reply is just <b>NOT A CAMPAIGN BRIEF.</b>, you pasted the wrong text. Go back to the campaign page and copy the rules.</div>
+  </div>
+
+  <div class="step"><span class="n">9</span>
+    <h3>Save the answer as brief.txt</h3>
+    <p>In the reply, find the line <b>COPY EVERYTHING BELOW THIS LINE INTO brief.txt</b>. Copy everything under it. Open TextEdit, go to <b>Format → Make Plain Text</b>, paste, and save it as <code>brief.txt</code> inside <span class="path">~/FLIC/input</span></p>
+    <div class="tip">The name matters: <b>brief.txt</b>, nothing else. TextEdit sometimes adds <b>.rtf</b> or <b>.txt.txt</b>; if FLIC leaves a file called <b>WAITING_FOR_BRIEF.txt</b> in the folder, the name is wrong.</div>
+  </div>
+
+  <h2 id="video">4 · Get the video</h2>
+  <p class="sub">One episode at a time, as an MP4.</p>
+
+  <div class="step"><span class="n">10</span>
+    <h3>Download the episode the campaign allows</h3>
+    <p>Most briefs say which channel or videos you may clip. Download that episode as an MP4 any way you like, then drop it into <span class="path">~/FLIC/input</span></p>
+    <p>Shortcut: open Terminal, type <code>cd ~/FLIC</code>, then this line with your campaign name and the YouTube link. It checks the source is allowed and saves the video into the input folder for you.</p>
+    <p><code>.venv/bin/python3 engine/scripts/ingest.py --campaign NAME --url "LINK"</code></p>
+    <div class="tip">The campaign name is the <b>name:</b> line near the top of your brief.txt. Keep only one video in the input folder at a time.</div>
+  </div>
+
+  <h2 id="run">5 · FLIC runs by itself</h2>
+  <p class="sub">Roughly 30 minutes for a 3-hour episode. Keep the Mac plugged in with the lid open.</p>
+
+  <div class="step"><span class="n">11</span>
+    <h3>Drop and walk away</h3>
+    <p>As soon as the video and brief.txt are both in the input folder, FLIC starts. Nothing to click. If nothing happens within a minute, double-click <b>Start FLIC</b> on your Desktop.</p>
+  </div>
+
+  <div class="step"><span class="n">12</span>
+    <h3>Answer the pause, if there is one</h3>
+    <p>If the verdict was RISKY, FLIC stops and writes why into <span class="path">~/FLIC/input/summary.txt</span></p>
+    <p>Fine with it? Make an empty file named <code>ACCEPT_RISK</code> in the input folder and FLIC continues. Not fine? Delete the video and brief and pick another campaign.</p>
+  </div>
+
+  <div class="step"><span class="n">13</span>
+    <h3>Wait for the notification</h3>
+    <p>You get a Mac notification when it's done and the review page opens on its own. The finished video moves to <span class="path">~/FLIC/input/done</span>, ready for the next one.</p>
+  </div>
+
+  <h2 id="post">6 · Post the clips and get paid</h2>
+  <p class="sub">This is the part only you can do. It takes a few minutes per clip.</p>
+
+  <div class="step"><span class="n">14</span>
+    <h3>Pick your clips on the review page</h3>
+    <p>Clips that passed every campaign rule are at the top, marked <b>PASS</b>, each with a rating, the hook it opens on, and a copy button for its caption. Watch them, keep the ones you like. Rejected clips and the reason are further down, in case you disagree.</p>
+    <p>The page lives at <span class="path">~/FLIC/output/NAME/…/clips_review.html</span> and the MP4s are in the same folder.</p>
+  </div>
+
+  <div class="step"><span class="n">15</span>
+    <h3>Post them where the brief allows</h3>
+    <p>Send the MP4s to your phone (AirDrop is quickest) and post one at a time on the platforms the campaign lists. Paste the caption from the review page. Add anything the brief requires, like a tag or a credit.</p>
+    <p>The posting rules in the brief are yours to follow by hand: keep posts up for the required time, keep likes visible, no paid boosts. They are repeated for you in <span class="path">~/FLIC/input/summary.txt</span></p>
+    <div class="tip">Spread clips out. One or two a day from the same episode does better than ten at once, and looks less like a bot to the platforms.</div>
+  </div>
+
+  <div class="step"><span class="n">16</span>
+    <h3>Submit the links on Whop</h3>
+    <p>Back on the campaign page, submit each post's link the way the brief says (usually a <b>Submit</b> button, sometimes with your account and audience details). Views are counted after approval and you're paid per 1,000. Then drop the next episode in.</p>
+  </div>
+
+  <h2 id="help">If something goes wrong</h2>
+  <div class="step"><span class="n">?</span>
+    <h3>Quick fixes</h3>
+    <ul class="plain">
+      <li><b>Nothing happens after dropping the files.</b> Double-click <b>Start FLIC</b> on the Desktop. If <code>WAITING_FOR_BRIEF.txt</code> appeared, brief.txt is missing or misnamed.</li>
+      <li><b>A "FLIC stopped" notification.</b> Read <code>~/FLIC/input/summary.txt</code>. It says exactly why.</li>
+      <li><b>No notification after an hour.</b> The Mac probably went to sleep. Keep it plugged in with the lid open and run again. The last lines of <code>~/FLIC/logs/watch.log</code> say where it got to.</li>
+      <li><b>The video ended up in input/failed.</b> The run broke. The log above says why; message us with the last 20 lines.</li>
+      <li><b>Want to pause FLIC.</b> Double-click <b>Stop FLIC</b>. Start FLIC turns it back on.</li>
+      <li><b>License problem.</b> FLIC checks your key before each run. If Whop shows your membership as inactive, FLIC won't run until it's active again.</li>
+    </ul>
+  </div>
+
+  <p class="foot">Stuck? Message us in the Whop support chat. <a href="/download/">Download</a> · <a href="/terms.html">Terms</a></p>
+</main>
+</body>
+</html>

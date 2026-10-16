@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>FLIC — Faceless, local, infinite clips</title>
-<meta name="description" content="FLIC turns one long video into up to 10 ready-to-post vertical clips in about 7 minutes, on your own computer. One-time price. No subscription, no API bills."/>
+<title>FLIC — Campaign-ready clips from every episode, on your Mac</title>
+<meta name="description" content="FLIC turns one podcast episode into up to 10 vertical clips and checks every one against the Whop campaign rules before you post. Runs on your Mac. Pay once."/>
 <link rel="canonical" href="https://flicclips.pages.dev/"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="FLIC"/>
-<meta property="og:title" content="FLIC — One video in. A week of clips out."/>
-<meta property="og:description" content="Up to 10 vertical, captioned, face-tracked clips per video. Runs on your own machine. One-time price, no subscription."/>
+<meta property="og:title" content="FLIC — Ten clips per episode. Every one checked against the campaign rules."/>
+<meta property="og:description" content="Drop an episode and the campaign brief into a folder. FLIC transcribes, picks the strongest moments, crops to the speaker, captions, and rejects anything the campaign would. On your Mac, one-time price."/>
 <meta property="og:url" content="https://flicclips.pages.dev/"/>
 <meta property="og:image" content="https://flicclips.pages.dev/og.png"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="FLIC — One video in. A week of clips out."/>
-<meta name="twitter:description" content="Up to 10 vertical clips per video, on your own computer. One-time price."/>
+<meta name="twitter:title" content="FLIC — Ten clips per episode, checked against the campaign rules."/>
+<meta name="twitter:description" content="Clip Whop campaigns on autopilot. Runs on your Mac. Pay once."/>
 <meta name="twitter:image" content="https://flicclips.pages.dev/og.png"/>
 <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: dark)"/>
 <meta name="theme-color" content="#f4f2ea" media="(prefers-color-scheme: light)"/>
@@ -27,16 +27,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet"/>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"FLIC","applicationCategory":"MultimediaApplication","operatingSystem":"macOS 14+ (Apple Silicon)","description":"Turns one long video into up to 10 vertical, captioned clips and checks each against a Whop clipping campaign's rules. Runs locally.","offers":{"@type":"Offer","price":"24.99","priceCurrency":"CAD","url":"https://whop.com/getflic/flicclips/"}}
+</script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0a0a0b;--bg2:#101013;--text:#f4f2ea;--muted:#8f8e97;--line:rgba(244,242,234,.13);--line2:rgba(244,242,234,.07);
-  --acc:#d4ff3f;--acc-ink:#0a0a0b;--acc-text:#d4ff3f;--phone:#151518;
+  --bg:#0a0a0b;--bg2:#101013;--bg3:#151518;--text:#f4f2ea;--muted:#9a99a2;--line:rgba(244,242,234,.14);--line2:rgba(244,242,234,.07);
+  --acc:#d4ff3f;--acc-ink:#0a0a0b;--acc-text:#d4ff3f;--phone:#151518;--good:#8fe36a;--bad:#ff7a6b;
   --ease:cubic-bezier(.2,.7,.2,1);
 }
 @media(prefers-color-scheme:light){:root{
-  --bg:#f4f2ea;--bg2:#ffffff;--text:#0f0f12;--muted:#5f5e67;--line:rgba(15,15,18,.14);--line2:rgba(15,15,18,.07);
-  --acc:#c8f43a;--acc-ink:#0f0f12;--acc-text:#4c7a00;--phone:#0f0f12;
+  --bg:#f4f2ea;--bg2:#ffffff;--bg3:#faf9f4;--text:#0f0f12;--muted:#55545d;--line:rgba(15,15,18,.14);--line2:rgba(15,15,18,.07);
+  --acc:#c8f43a;--acc-ink:#0f0f12;--acc-text:#4c7a00;--phone:#0f0f12;--good:#1f8a4c;--bad:#c0392b;
 }}
 html{scroll-behavior:smooth;background:var(--bg)}
 body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--text);background:var(--bg);line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
@@ -46,9 +49,12 @@ a{color:inherit;text-decoration:none}
 .hl{background:var(--acc);color:var(--acc-ink);padding:0 .18em;border-radius:.12em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .k{font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;color:var(--muted)}
 .k b{color:var(--text)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--acc);color:var(--acc-ink);font-family:inherit;font-weight:700;font-size:14px;padding:15px 24px;border-radius:999px;border:0;cursor:pointer;transition:transform .2s var(--ease),filter .2s}
-.btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
-.btn.sm{padding:10px 16px;font-size:13px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--acc);color:var(--acc-ink);font-family:inherit;font-weight:700;font-size:15px;padding:16px 26px;border-radius:999px;border:0;cursor:pointer;transition:filter .2s,box-shadow .2s;min-height:48px}
+.btn:hover{filter:brightness(1.06);box-shadow:0 8px 30px color-mix(in srgb,var(--acc) 35%,transparent)}
+.btn:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--acc-text);outline-offset:3px}
+.btn.sm{padding:10px 16px;font-size:13px;min-height:40px}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn.ghost:hover{box-shadow:none;border-color:var(--text)}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
 .reveal.in{opacity:1;transform:none}
 .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
@@ -56,21 +62,22 @@ a{color:inherit;text-decoration:none}
 .logo svg{height:100%;width:auto;display:block}
 .logo .fr{fill:var(--acc)}
 /* nav */
-.nav{position:fixed;z-index:50;top:0;left:0;right:0;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line2)}
+.nav{position:fixed;z-index:50;top:0;left:0;right:0;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line2)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
 .nav .lnk{display:flex;align-items:center;gap:26px;font-size:13.5px;font-weight:600}
 .nav .lnk a:not(.btn){color:var(--muted);transition:color .2s}.nav .lnk a:not(.btn):hover{color:var(--text)}
 @media(max-width:760px){.nav .lnk a:not(.btn){display:none}}
 /* hero */
 #hero{padding:150px 0 0;position:relative}
-.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(24px,5vw,72px);align-items:end}
-.hero-copy .k{display:block;margin-bottom:26px;opacity:0;animation:rise .8s .05s forwards var(--ease)}
-.hero-copy h1{font-size:clamp(46px,7.2vw,96px);opacity:0;animation:rise .9s .18s forwards var(--ease)}
-.hero-copy .sub{font-size:clamp(16px,1.6vw,19px);color:var(--muted);margin-top:28px;max-width:520px;opacity:0;animation:rise .9s .34s forwards var(--ease)}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(24px,5vw,72px);align-items:center}
+.hero-copy .k{display:flex;align-items:center;gap:10px;margin-bottom:26px;opacity:0;animation:rise .8s .05s forwards var(--ease)}
+.hero-copy .k i{width:8px;height:8px;border-radius:50%;background:var(--acc);display:inline-block}
+.hero-copy h1{font-size:clamp(42px,6.4vw,84px);opacity:0;animation:rise .9s .18s forwards var(--ease)}
+.hero-copy .sub{font-size:clamp(16px,1.6vw,19px);color:var(--muted);margin-top:26px;max-width:540px;opacity:0;animation:rise .9s .34s forwards var(--ease)}
 .hero-copy .sub b{color:var(--text);font-weight:600}
-.hero-row{display:flex;gap:12px;align-items:center;margin-top:34px;flex-wrap:wrap;opacity:0;animation:rise .9s .5s forwards var(--ease)}
-.hero-row .alt{font-size:13.5px;color:var(--muted);font-weight:600;margin-left:6px}
-.hero-row .alt:hover{color:var(--text)}
+.hero-row{display:flex;gap:12px;align-items:center;margin-top:32px;flex-wrap:wrap;opacity:0;animation:rise .9s .5s forwards var(--ease)}
+.hero-fine{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px;font-size:13px;color:var(--muted);font-weight:600;opacity:0;animation:rise .9s .6s forwards var(--ease)}
+.hero-fine span::before{content:"✓";color:var(--acc-text);margin-right:6px;font-weight:800}
 @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 /* phone */
 .phone-wrap{display:flex;justify-content:center;opacity:0;animation:rise 1s .4s forwards var(--ease)}
@@ -93,31 +100,53 @@ a{color:inherit;text-decoration:none}
 .screen .meta{position:absolute;left:8%;bottom:12.5%;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7);font-weight:700}
 .screen .meta b{color:#fff}
 .screen .tag{position:absolute;right:8%;top:6%;font-size:9px;letter-spacing:.12em;font-weight:700;background:#d4ff3f;color:#000;padding:3px 7px;border-radius:4px}
-/* timeline strip */
+.screen .pass{position:absolute;left:8%;top:6%;font-size:9px;letter-spacing:.12em;font-weight:800;background:#8fe36a;color:#000;padding:3px 7px;border-radius:4px}
+/* stats strip */
 .tl{margin-top:70px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr)}
 .tl div{padding:22px 0;display:flex;align-items:baseline;gap:14px;border-left:1px solid var(--line);padding-left:22px}
 .tl div:first-child{border-left:0;padding-left:0}
 .tl b{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(26px,3vw,38px);letter-spacing:-.03em;line-height:1}
 .tl span{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:700}
-/* marquee */
-.marq{overflow:hidden;border-bottom:1px solid var(--line);padding:16px 0;white-space:nowrap;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
-.marq div{display:inline-block;animation:marq 40s linear infinite}
-.marq span{display:inline-block;padding:0 26px;color:var(--muted)}
-.marq span::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--acc);margin-right:26px;vertical-align:middle}
-@keyframes marq{to{transform:translateX(-50%)}}
 /* sections */
 section{padding:clamp(72px,9vw,120px) 0}
 .sec-head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;padding-bottom:36px;border-bottom:1px solid var(--line);margin-bottom:8px}
 .sec-head h2{font-size:clamp(34px,5vw,64px)}
 .sec-head p{color:var(--muted);font-size:17px;max-width:440px;justify-self:end}
 .num{display:block;margin-bottom:16px}
+/* problem */
+.prob{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+.prob div{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:26px 24px}
+.prob h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:21px;letter-spacing:-.02em;line-height:1.1}
+.prob p{color:var(--muted);margin-top:10px;font-size:15px}
+.prob .x{color:var(--bad);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:800;display:block;margin-bottom:14px}
+/* proof: review page mock */
+.proof{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(24px,5vw,64px);align-items:center;margin-top:28px}
+.proof h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(26px,3vw,38px);letter-spacing:-.02em;line-height:1.05}
+.proof p{color:var(--muted);margin-top:16px;font-size:16px}
+.proof p b{color:var(--text)}
+.rev{background:var(--bg2);border:1px solid var(--line);border-radius:20px;overflow:hidden;font-size:13px;box-shadow:0 30px 60px rgba(0,0,0,.25)}
+.rev .top{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);font-weight:700}
+.rev .top span{color:var(--muted);font-weight:600;font-size:12px}
+.rev .row{display:grid;grid-template-columns:38px 1fr auto;gap:14px;align-items:center;padding:12px 18px;border-bottom:1px solid var(--line2)}
+.rev .row:last-child{border-bottom:0}
+.rev .th{width:38px;aspect-ratio:9/16;border-radius:6px;background:linear-gradient(180deg,#3a3f2a,#141510);position:relative;overflow:hidden}
+.rev .th::after{content:"";position:absolute;left:30%;top:18%;width:40%;aspect-ratio:1;border-radius:50%;background:#6b6f4a}
+.rev .t{font-weight:700;line-height:1.3}
+.rev .t small{display:block;color:var(--muted);font-weight:600;font-size:11.5px;margin-top:3px}
+.rev .pill{font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;padding:5px 9px;border-radius:5px;white-space:nowrap}
+.rev .pill.ok{background:var(--good);color:#0a0a0b}
+.rev .pill.no{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad)}
+.rev .foot{padding:12px 18px;color:var(--muted);font-size:12px;background:var(--bg3)}
 /* steps */
-.steps{display:grid;grid-template-columns:repeat(3,1fr)}
-.step{padding:34px 28px 38px 0;border-top:1px solid var(--line);margin-right:28px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr)}
+.step{padding:34px 24px 38px 0;border-top:1px solid var(--line);margin-right:24px}
 .step:last-child{margin-right:0}
 .step .n{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:13px;letter-spacing:.2em;color:var(--acc-text);margin-bottom:18px;display:block}
-.step h3{font-size:24px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.step h3{font-size:22px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.05}
 .step p{color:var(--muted);margin-top:12px;font-size:15px}
+.step p b{color:var(--text);font-weight:600}
+.step .you{display:inline-block;margin-top:14px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:var(--muted)}
+.step .you.f{color:var(--acc-text)}
 /* compare */
 .cmp{display:grid;grid-template-columns:1.2fr 1fr 1fr;border-top:1px solid var(--line)}
 .cmp>div{padding:18px 16px;border-bottom:1px solid var(--line);font-size:15px;display:flex;align-items:center}
@@ -125,7 +154,7 @@ section{padding:clamp(72px,9vw,120px) 0}
 .cmp .h.acc{color:var(--acc-ink);background:var(--acc)}
 .cmp .lab{color:var(--muted);font-weight:600}
 .cmp .flic{font-weight:700;background:color-mix(in srgb,var(--acc) 10%,transparent)}
-.cmp .x{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(255,80,80,.7)}
+.cmp .x{color:var(--muted)}
 @media(max-width:640px){.cmp{grid-template-columns:1fr 1fr 1fr}.cmp>div{padding:14px 10px;font-size:13px}.cmp .h{padding:10px}}
 /* who */
 .who{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
@@ -149,6 +178,7 @@ section{padding:clamp(72px,9vw,120px) 0}
 .pr .big{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(64px,8vw,108px);letter-spacing:-.05em;line-height:.9;margin:22px 0 12px}
 .pr .sub{font-size:15px;font-weight:600;opacity:.8}
 .pr .l .btn{background:var(--acc-ink);color:var(--acc);margin-top:34px;width:100%}
+.pr .l .btn:hover{box-shadow:0 8px 30px rgba(0,0,0,.3)}
 .pr .l .fine{font-size:12.5px;margin-top:14px;opacity:.75;font-weight:600}
 .pr .r{padding:clamp(34px,5vw,64px);background:var(--bg2)}
 .pr .r h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:28px;letter-spacing:-.02em;line-height:1.05}
@@ -157,6 +187,9 @@ section{padding:clamp(72px,9vw,120px) 0}
 .pr li::before{content:"✓";color:var(--acc-text);font-weight:800}
 .pr .aff{display:inline-block;margin-top:22px;font-size:13.5px;color:var(--muted);text-decoration:underline}
 .pr .aff:hover{color:var(--text)}
+.math{margin-top:18px;background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:22px 26px;display:flex;gap:28px;align-items:center;flex-wrap:wrap}
+.math b{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em;display:block}
+.math span{color:var(--muted);font-size:14px}
 /* faq */
 .faq{border-top:1px solid var(--line)}
 .faq details{border-bottom:1px solid var(--line)}
@@ -177,6 +210,9 @@ footer .tag{margin-top:12px;display:block}
 .foot-links{display:flex;gap:22px;font-size:14px;flex-wrap:wrap}
 .foot-links a{color:var(--muted)}.foot-links a:hover{color:var(--text)}
 .copyr{color:var(--muted);font-size:12.5px;margin-top:36px}
+/* sticky mobile cta */
+.stick{position:fixed;left:0;right:0;bottom:0;z-index:40;display:none;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line2)}
+.stick .btn{width:100%}
 /* modal */
 .modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);padding:20px}
 .modal.open{display:flex}
@@ -184,18 +220,22 @@ footer .tag{margin-top:12px;display:block}
 .modal-card h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.02em;margin-bottom:12px}
 .modal-card p{color:var(--muted);font-size:14.5px;margin-bottom:18px}
 .modal-card p b{color:var(--text)}
+.modal-card ul{list-style:none;margin:0 0 18px;font-size:14px}
+.modal-card li{padding:6px 0;display:flex;gap:10px}
+.modal-card li::before{content:"✓";color:var(--acc-text);font-weight:800}
 .modal-card .agree{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin-bottom:20px;cursor:pointer}
-.modal-card .agree input{margin-top:3px;accent-color:#4c7a00}
+.modal-card .agree input{margin-top:3px;accent-color:#4c7a00;width:18px;height:18px}
 .modal-card .agree a{text-decoration:underline}
 .modal-card .btn{width:100%}
 .modal-card .btn.disabled{opacity:.4;pointer-events:none}
-.modal-close{position:absolute;top:12px;right:16px;background:none;border:0;color:var(--muted);font-size:26px;cursor:pointer;line-height:1}
+.modal-close{position:absolute;top:12px;right:16px;background:none;border:0;color:var(--muted);font-size:26px;cursor:pointer;line-height:1;width:40px;height:40px}
 /* responsive */
-@media(max-width:900px){.hero{grid-template-columns:1fr;gap:44px}.phone-wrap{order:-1}.steps,.who{grid-template-columns:1fr}.step{margin-right:0}.who{border-left:0}.who div{border-right:0;padding-left:0;padding-right:0}.inc{grid-template-columns:1fr}.sec-head{grid-template-columns:1fr;gap:14px}.sec-head p{justify-self:start}#pricing .pr{grid-template-columns:1fr}.cta{grid-template-columns:1fr}}
-@media(max-width:760px){#hero{padding-top:104px}.tl{grid-template-columns:1fr 1fr 1fr}.tl div{flex-direction:column;gap:6px;padding:16px 0 16px 14px}.tl div:first-child{padding-left:0}.tl b{font-size:24px}.tl span{font-size:9.5px;letter-spacing:.14em}.hero-copy h1{font-size:clamp(42px,12vw,64px)}}
+@media(max-width:1000px){.steps{grid-template-columns:1fr 1fr}.step{margin-right:0;padding-right:24px}}
+@media(max-width:900px){.hero{grid-template-columns:1fr;gap:40px}.phone{width:min(240px,60vw)}.who,.prob{grid-template-columns:1fr}.who{border-left:0}.who div{border-right:0;padding-left:0;padding-right:0}.inc{grid-template-columns:1fr}.sec-head{grid-template-columns:1fr;gap:14px}.sec-head p{justify-self:start}#pricing .pr{grid-template-columns:1fr}.cta{grid-template-columns:1fr}.proof{grid-template-columns:1fr}}
+@media(max-width:760px){#hero{padding-top:104px}.tl{grid-template-columns:1fr 1fr 1fr}.tl div{flex-direction:column;gap:6px;padding:16px 0 16px 14px}.tl div:first-child{padding-left:0}.tl b{font-size:24px}.tl span{font-size:9.5px;letter-spacing:.14em}.hero-copy h1{font-size:clamp(40px,11.5vw,60px)}.stick{display:block}body{padding-bottom:72px}.steps{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
-  .reveal,.hero-copy .k,.hero-copy h1,.hero-copy .sub,.hero-row,.phone-wrap,.screen .cap span{opacity:1!important;transform:none!important}
+  .reveal,.hero-copy .k,.hero-copy h1,.hero-copy .sub,.hero-row,.hero-fine,.phone-wrap,.screen .cap span{opacity:1!important;transform:none!important}
   .screen .bar i{width:60%}
 }
 </style>
@@ -205,7 +245,7 @@ footer .tag{margin-top:12px;display:block}
   <div class="wrap">
     <a href="#top" class="logo" aria-label="FLIC home" id="navLogo"></a>
     <span class="lnk">
-      <a href="#how">How it works</a><a href="#who">Who it's for</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
+      <a href="#how">How it works</a><a href="#proof">A real run</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
       <button class="btn sm" onclick="openBuy()">Get FLIC</button>
     </span>
   </div>
@@ -216,18 +256,20 @@ footer .tag{margin-top:12px;display:block}
     <div class="wrap">
       <div class="hero">
         <div class="hero-copy">
-          <span class="k">Faceless · Local · Infinite · Clips</span>
-          <h1 class="disp">One video in.<br><span class="hl">A week of clips</span> out.</h1>
-          <p class="sub">Drop a long video. FLIC finds the strongest moments and exports <b>up to 10 vertical, captioned clips</b> in about 7 minutes. On your own computer. <b>Pay once.</b></p>
+          <span class="k"><i></i>Built for Whop clipping campaigns · Mac</span>
+          <h1 class="disp">Ten clips per episode. <span class="hl">Every one</span> checked against the campaign rules.</h1>
+          <p class="sub">Drop a podcast episode and the campaign brief into a folder. FLIC transcribes it, finds the strongest moments, crops to the speaker, captions each clip and <b>throws out anything the campaign would reject</b>. On your own Mac. <b>Pay once.</b></p>
           <div class="hero-row">
-            <button class="btn" onclick="openBuy()">Get FLIC — <span data-price="short">$32.99</span> →</button>
-            <a class="alt" href="#how">See how it works ↓</a>
+            <button class="btn" onclick="openBuy()">Get FLIC — <span data-price="short">CA$24.99</span> one-time →</button>
+            <a class="btn ghost" href="#proof">See a real run</a>
           </div>
+          <div class="hero-fine"><span>No subscription</span><span>No upload, nothing leaves your Mac</span><span>No editing skills</span></div>
         </div>
         <div class="phone-wrap" aria-hidden="true">
           <div class="phone"><div class="screen">
             <div class="vid"></div>
             <div class="track"><i>face lock</i></div>
+            <span class="pass">PASS</span>
             <span class="tag">9:16</span>
             <div class="cap" id="cap"></div>
             <div class="meta">clip 03 / 10 · <b>0:38</b></div>
@@ -236,27 +278,62 @@ footer .tag{margin-top:12px;display:block}
         </div>
       </div>
       <div class="tl">
-        <div><b>Up to 10</b><span>clips per video</span></div>
-        <div><b>~7 min</b><span>per 30-min video</span></div>
-        <div><b>$0</b><span>monthly · no API bills</span></div>
+        <div><b>Up to 10</b><span>clips per episode</span></div>
+        <div><b>&lt; 30 min</b><span>for a 3-hour episode</span></div>
+        <div><b>$0</b><span>per month, ever</span></div>
       </div>
     </div>
-    <div class="marq" aria-hidden="true"><div>
-      <span>Stop trading time</span><span>Nobody tells you this</span><span>The real reason</span><span>I was wrong</span><span>Do this first</span><span>$0 to start</span><span>It's not luck</span><span>Read the room</span><span>One rule</span><span>Watch this</span>
-      <span>Stop trading time</span><span>Nobody tells you this</span><span>The real reason</span><span>I was wrong</span><span>Do this first</span><span>$0 to start</span><span>It's not luck</span><span>Read the room</span><span>One rule</span><span>Watch this</span>
-    </div></div>
+  </section>
+
+  <section id="problem">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><span class="k num"><b>01</b> The problem</span><h2 class="disp">Clipping pays per view.<br>Rejections pay nothing.</h2></div>
+        <p>Content Rewards campaigns pay per 1,000 views, but only on posts that follow the brief. Most clippers lose on one of three fronts.</p>
+      </div>
+      <div class="prob">
+        <div class="reveal"><span class="x">Time</span><h3>Hours per episode</h3><p>Scrubbing a 3-hour podcast for ten good moments, then cropping and captioning each one, is most of a day. Volume is the whole game and the day is the cap.</p></div>
+        <div class="reveal d1"><span class="x">Rejections</span><h3>Posts that don't count</h3><p>Mid-sentence openers, the speaker off screen, a sponsor read, a cut in the middle. The campaign rejects it, the views don't pay, and you find out a week later.</p></div>
+        <div class="reveal d2"><span class="x">Cost</span><h3>Cloud clippers eat the margin</h3><p>Subscription clippers charge $20–60 a month and cap your minutes. They also don't read the brief, so the rejection problem stays.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="proof">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><span class="k num"><b>02</b> A real run</span><h2 class="disp">What one episode<br>turns into.</h2></div>
+        <p>Numbers from an actual FLIC run on a 3 h 44 min episode of a podcast in a live Whop clipping campaign. No cherry-picking.</p>
+      </div>
+      <div class="proof">
+        <div class="reveal">
+          <h3>10 clips rendered. 8 passed every campaign rule. 2 rejected before they could cost a post.</h3>
+          <p>Each clip opens on a full sentence with a hook (no "…and that's why" starts), stays inside one unbroken passage, keeps the speaker's face on screen, and skips the sponsor reads. The two rejects were flagged because the face was off camera in the first five seconds, <b>with the reason written next to them</b>.</p>
+          <p>The review page opens on its own when it's done. Watch, copy the caption, post, submit the link on Whop.</p>
+        </div>
+        <div class="rev reveal d1" aria-label="Example of the FLIC review page">
+          <div class="top">clips_review.html <span>solved · 10 clips · 8 pass</span></div>
+          <div class="row"><div class="th"></div><div class="t">Having more to lose than gain makes it harder to be excited about gaining more.<small>clip 07 · reframe · 8/10 · 0:34 · caption ready</small></div><span class="pill ok">Pass</span></div>
+          <div class="row"><div class="th"></div><div class="t">Seeking out failure as a path to enlightenment is a dead end.<small>clip 04 · reframe · 8/10 · 0:35</small></div><span class="pill ok">Pass</span></div>
+          <div class="row"><div class="th"></div><div class="t">Failure in a relationship doesn't necessarily make you stronger.<small>clip 08 · reframe · 8/10 · 0:36</small></div><span class="pill ok">Pass</span></div>
+          <div class="row"><div class="th"></div><div class="t">Relationships fail for dumb reasons; learn from them so you don't repeat them.<small>clip 10 · story payoff · 8/10 · no face in first 5 s</small></div><span class="pill no">Rejected</span></div>
+          <div class="foot">Rejected clips and the exact rule they broke sit in their own folder, in case you disagree.</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section id="how">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div><span class="k num"><b>01</b> How it works</span><h2 class="disp">Drop it in.<br>Walk away.</h2></div>
-        <p>No editing skills, no uploads, no credits. Three steps, all on your machine.</p>
+        <div><span class="k num"><b>03</b> How it works</span><h2 class="disp">Four steps.<br>You do two of them.</h2></div>
+        <p>No timeline, no editor, no uploads. Your part takes a few minutes per episode; FLIC's part runs while you do something else.</p>
       </div>
       <div class="steps">
-        <div class="step reveal"><span class="n">STEP 01</span><h3>Drop a video</h3><p>Any length, any common format. mp4, mov, mkv, webm. Put it in the FLIC input folder and it starts on its own.</p></div>
-        <div class="step reveal d1"><span class="n">STEP 02</span><h3>FLIC does the work</h3><p>Transcribes the whole thing, scores every moment for energy, emotion and hooks, and picks the strongest. Runs locally on a small AI model. Nothing leaves your computer.</p></div>
-        <div class="step reveal d2"><span class="n">STEP 03</span><h3>Post</h3><p>Up to 10 vertical clips land in your output folder. Face-tracked crop, animated captions, filler words and dead air cut, a hook line written for each one.</p></div>
+        <div class="step reveal"><span class="n">STEP 01</span><h3>Pick a campaign on Whop</h3><p>Open Content Rewards, choose a podcast or talking-head campaign, copy the brief.</p><span class="you">You · 1 min</span></div>
+        <div class="step reveal d1"><span class="n">STEP 02</span><h3>Let ChatGPT read the brief</h3><p>Paste FLIC's prompt and the brief into ChatGPT. It answers <b>GO</b>, <b>RISKY</b> or <b>SKIP</b> and writes the rules file. Save it as brief.txt.</p><span class="you">You · 2 min</span></div>
+        <div class="step reveal d2"><span class="n">STEP 03</span><h3>Drop the episode in</h3><p>Put the video and brief.txt in the FLIC folder. It transcribes on the Apple GPU, scores every moment, picks the ten strongest, crops, captions and gates them.</p><span class="you f">FLIC · ~30 min</span></div>
+        <div class="step reveal d3"><span class="n">STEP 04</span><h3>Post the passes</h3><p>The review page opens. Post the clips marked PASS with their captions, submit the links on the campaign, get paid per view.</p><span class="you">You · a few min per clip</span></div>
       </div>
     </div>
   </section>
@@ -264,16 +341,17 @@ footer .tag{margin-top:12px;display:block}
   <section id="compare">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div><span class="k num"><b>02</b> The math</span><h2 class="disp">A week of posts from <span class="hl">one</span> recording.</h2></div>
-        <p>A 30-minute talking video usually lands 8 to 10 clips. Post one a day and a single recording covers your week. No cap on how many videos you run.</p>
+        <div><span class="k num"><b>04</b> Why not a cloud clipper</span><h2 class="disp">They cut clips.<br>FLIC cuts <span class="hl">paid</span> clips.</h2></div>
+        <p>Cloud tools are built for creators posting their own content. FLIC is built for the person being paid to follow someone else's rules.</p>
       </div>
       <div class="cmp reveal d1">
-        <div class="h">Per 30-min video</div><div class="h">Clipping by hand</div><div class="h acc">FLIC</div>
-        <div class="lab">Time</div><div class="x">2–4 hours</div><div class="flic">~7 minutes</div>
-        <div class="lab">Clips out</div><div>3–4, if you stick with it</div><div class="flic">Up to 10</div>
-        <div class="lab">Captions, crop, cleanup</div><div class="x">Manual, every clip</div><div class="flic">Automatic</div>
-        <div class="lab">Monthly cost</div><div class="x">Cloud clippers: $20–60/mo</div><div class="flic">$0 after purchase</div>
-        <div class="lab">Where your video goes</div><div>Uploaded to someone's server</div><div class="flic">Stays on your machine</div>
+        <div class="h">Per episode</div><div class="h">Cloud clippers</div><div class="h acc">FLIC</div>
+        <div class="lab">Reads the campaign brief</div><div class="x">No</div><div class="flic">Yes. GO / RISKY / SKIP before you start</div>
+        <div class="lab">Rejects rule-breaking clips</div><div class="x">No</div><div class="flic">Yes, with the reason</div>
+        <div class="lab">Clip openers</div><div class="x">Often mid-sentence</div><div class="flic">Full sentence, hook first</div>
+        <div class="lab">Sponsor reads</div><div class="x">Clipped like anything else</div><div class="flic">Skipped</div>
+        <div class="lab">Monthly cost</div><div class="x">$20–60, minutes capped</div><div class="flic">$0 after purchase, unlimited</div>
+        <div class="lab">Where your video goes</div><div class="x">Their servers</div><div class="flic">Stays on your Mac</div>
       </div>
     </div>
   </section>
@@ -281,65 +359,69 @@ footer .tag{margin-top:12px;display:block}
   <section id="who">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div><span class="k num"><b>03</b> Who it's for</span><h2 class="disp">Built for volume.</h2></div>
-        <p>However you make money with content, output is the bottleneck. FLIC removes it.</p>
+        <div><span class="k num"><b>05</b> Who it's for</span><h2 class="disp">Three ways to use it.</h2></div>
+        <p>Whichever way you make money from clips, output is the bottleneck. FLIC removes it.</p>
       </div>
       <div class="who">
-        <div class="reveal"><span class="t">Clippers</span><h3>Faceless volume play</h3><p>Clip-for-views programs pay per 1,000 views, so volume is the whole game. FLIC gives you volume without a face, an editor, or a subscription.</p></div>
-        <div class="reveal d1"><span class="t">Creators</span><h3>Podcasters &amp; YouTubers</h3><p>Already recording long-form? One upload becomes a week of shorts for TikTok, Reels and YouTube at the same time.</p></div>
-        <div class="reveal d2"><span class="t">Affiliates</span><h3>Sell it instead</h3><p>Don't want to clip? Earn a cut of every sale through Whop. One-time price, nothing for the buyer to cancel, nothing for you to support.</p></div>
+        <div class="reveal"><span class="t">Clippers</span><h3>Run campaigns at volume</h3><p>Content Rewards pays per 1,000 views, so the clipper with the most compliant posts wins. FLIC gives you ten posts per episode without a face, an editor or a subscription.</p></div>
+        <div class="reveal d1"><span class="t">Creators</span><h3>Podcasters &amp; YouTubers</h3><p>Already recording long-form? One episode becomes a week of Shorts, Reels and TikToks, cropped to you and captioned, without uploading your raw footage anywhere.</p></div>
+        <div class="reveal d2"><span class="t">Affiliates</span><h3>Sell it instead</h3><p>Don't want to clip? Earn 30% of every sale through Whop. One-time price, nothing for the buyer to cancel, nothing for you to support.</p></div>
       </div>
-      <p class="note">Figures describe how the model works. They are not income guarantees.</p>
+      <p class="note">Campaign payouts are set by each campaign and depend on your posts' views. Nothing here is an income guarantee.</p>
     </div>
   </section>
 
   <section id="included">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div><span class="k num"><b>04</b> What's included</span><h2 class="disp">Everything in the box.</h2></div>
-        <p>One purchase. No add-ons, no API keys, no usage fees.</p>
+        <div><span class="k num"><b>06</b> What's included</span><h2 class="disp">Everything in the box.</h2></div>
+        <p>One purchase, one installer. No API keys, no credits, no add-ons.</p>
       </div>
       <div class="inc reveal d1">
-        <div>Local AI clip selection <span>· energy, emotion, hook scoring</span></div>
-        <div>Face-tracking crop <span>· stays on the speaker</span></div>
-        <div>Animated captions <span>· word-by-word pop</span></div>
-        <div>Filler &amp; dead-air removal</div>
-        <div>Hook line per clip <span>· written by the local model</span></div>
-        <div>Audio normalization</div>
-        <div>Auto thumbnails</div>
-        <div>Unique export per clip <span>· no two files identical</span></div>
-        <div>Unlimited videos</div>
-        <div>Lifetime updates</div>
+        <div>Campaign rule gate <span>· every clip checked, rejects explained</span></div>
+        <div>Brief reader prompt for ChatGPT <span>· GO / RISKY / SKIP verdict</span></div>
+        <div>Hook-first clip starts <span>· full sentences, no filler openers</span></div>
+        <div>Face-tracked 9:16 crop <span>· stays on the speaker</span></div>
+        <div>Word-by-word captions <span>· burned in</span></div>
+        <div>Caption text per clip <span>· written by the local model, copy button</span></div>
+        <div>Sponsor reads skipped automatically</div>
+        <div>Review page <span>· pass / reject, ratings, hooks</span></div>
+        <div>Drop-and-go folder watcher <span>· starts at login</span></div>
+        <div>Unlimited episodes, lifetime updates</div>
       </div>
-      <div class="req reveal d2"><span class="k">Needs</span><em>Windows 10/11 or macOS 12+</em><em>8 GB RAM</em><em>Internet for the install only</em><span class="note" style="margin:0">The one-click installer sets up Python, FFmpeg and the AI model.</span></div>
+      <div class="req reveal d2"><span class="k">Needs</span><em>Mac with Apple Silicon (M1 or newer)</em><em>macOS 14+</em><em>20 GB free</em><em>Internet for the install</em><span class="note" style="margin:0">One installer sets up the speech model, the local AI and the watcher. Windows: not yet.</span></div>
     </div>
   </section>
 
   <section id="pricing">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div><span class="k num"><b>05</b> Pricing</span><h2 class="disp">One price.<br>Yours forever.</h2></div>
-        <p>Pay once. Run it on every video you ever record.</p>
+        <div><span class="k num"><b>07</b> Pricing</span><h2 class="disp">One price.<br>Yours forever.</h2></div>
+        <p>Pay once. Run it on every episode you ever clip.</p>
       </div>
       <div class="pr reveal d1">
         <div class="l">
           <span class="k">One-time</span>
-          <div class="big" data-price="big">$32.99</div>
-          <div class="sub" data-price="note">USD · one-time · no subscription</div>
+          <div class="big" data-price="big">$24.99</div>
+          <div class="sub" data-price="note">CAD · about US$18 · one-time, no subscription</div>
           <button class="btn" onclick="openBuy()">Get FLIC →</button>
-          <div class="fine">Delivered through Whop. Download, run one file, done.</div>
+          <div class="fine">Checkout on Whop. Download one file, run it, done.</div>
         </div>
         <div class="r">
           <h3>What you get</h3>
           <ul>
-            <li>Up to 10 clips per video, unlimited videos</li>
-            <li>Runs locally. Your files never leave your machine</li>
-            <li>Face-tracked, captioned, filler removed, hook text written</li>
-            <li>Windows &amp; macOS, one-click installer</li>
-            <li>Lifetime updates</li>
+            <li>Up to 10 clips per episode, unlimited episodes</li>
+            <li>Every clip checked against the campaign brief</li>
+            <li>Face-tracked crop, captions, hook-first starts, sponsor reads skipped</li>
+            <li>Runs on your Mac. Your files never leave it</li>
+            <li>Lifetime updates, Whop support chat</li>
           </ul>
-          <a class="aff" href="https://whop.com/getflic/flicclips/" target="_blank" rel="noopener">Want to sell it instead? Become an affiliate →</a>
+          <a class="aff" href="https://whop.com/getflic/flicclips/" target="_blank" rel="noopener">Want to sell it instead? Earn 30% as an affiliate →</a>
         </div>
+      </div>
+      <div class="math reveal d2">
+        <div><b>Less than one cloud month</b><span>Most subscription clippers cost more per month than FLIC costs once.</span></div>
+        <div><b>Pays for itself on one campaign</b><span>At a typical $1 per 1,000 views, one clip that clears a few thousand views covers it.</span></div>
       </div>
     </div>
   </section>
@@ -347,16 +429,17 @@ footer .tag{margin-top:12px;display:block}
   <section id="faq">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div><span class="k num"><b>06</b> FAQ</span><h2 class="disp">Questions, answered.</h2></div>
+        <div><span class="k num"><b>08</b> FAQ</span><h2 class="disp">Questions, answered.</h2></div>
       </div>
       <div class="faq reveal d1">
-        <details open><summary>How many clips do I actually get?</summary><p>Up to 10 per video. A 30-minute talking video usually lands 8 to 10. Shorter videos give fewer. FLIC only cuts moments with real speech, so a silent or music-only file won't produce clips.</p></details>
-        <details><summary>Is it a subscription?</summary><p>No. Pay once. Lifetime updates, no monthly fee, no API costs, no credits.</p></details>
-        <details><summary>Does it run in the cloud?</summary><p>No. FLIC runs entirely on your own computer. Your videos never get uploaded anywhere.</p></details>
-        <details><summary>Do I need to show my face?</summary><p>No. It works on any long video with speech. Faceless-friendly by design.</p></details>
-        <details><summary>What do I need to run it?</summary><p>Windows 10/11 or macOS 12+ and 8 GB of RAM. The installer handles Python, FFmpeg, the local AI model and everything else. You run one file.</p></details>
-        <details><summary>How do I get it after buying?</summary><p>Checkout is through Whop. You download a ZIP, double-click one file, and the whole environment sets itself up.</p></details>
-        <details><summary>Refunds?</summary><p>FLIC is a digital product delivered instantly, so all sales are final. Read the requirements above before you buy, and reach out if anything in setup gives you trouble.</p></details>
+        <details open><summary>Will it work on my computer?</summary><p>FLIC runs on Macs with Apple Silicon (M1, M2, M3, M4) on macOS 14 or newer, with about 20 GB free for the speech and language models. Intel Macs and Windows aren't supported yet; a Windows version for NVIDIA cards is on the list.</p></details>
+        <details><summary>How many clips do I get, and how long does it take?</summary><p>Up to 10 per episode. A 3-hour podcast takes under 30 minutes on an M-series Mac, most of it transcription; a 30-minute video takes a few minutes. Keep the Mac plugged in with the lid open while it runs.</p></details>
+        <details><summary>Which campaigns does it work with?</summary><p>Podcast, interview and talking-head clipping campaigns where you post real moments with captions. Paste the brief into ChatGPT with FLIC's prompt: GO means it fits, RISKY means there's a rule you should decide on (a warm-up period, "no clipping tools"), SKIP means the campaign wants a special look or beat-edits that FLIC doesn't make.</p></details>
+        <details><summary>Does it guarantee my posts get approved?</summary><p>No. FLIC enforces the rules that can be checked automatically: openers, unbroken passages, face on screen, sponsor reads, length, platforms. Approval is still the campaign's call, and the posting rules (keep it up 30 days, no paid boosts, required tags) are yours to follow.</p></details>
+        <details><summary>Is it a subscription?</summary><p>No. Pay once. Lifetime updates, no monthly fee, no API costs, no credits. The only ongoing cost is your Mac's electricity.</p></details>
+        <details><summary>Does my video get uploaded anywhere?</summary><p>No. Transcription, scoring, cropping and captions all run on your Mac. The only thing FLIC sends out is a license check to Whop.</p></details>
+        <details><summary>How do I get it after buying?</summary><p>Whop shows your license key. Download one file from the download page, double-click it, paste the key, and it installs everything: the speech model, the local language model and a Start button on your Desktop. There's a step-by-step guide from purchase to posting.</p></details>
+        <details><summary>Refunds?</summary><p>FLIC is a digital product delivered instantly, so all sales are final. Check the requirements above before buying, and message us in the Whop support chat if anything in setup gives you trouble.</p></details>
       </div>
     </div>
   </section>
@@ -364,8 +447,8 @@ footer .tag{margin-top:12px;display:block}
   <section id="cta">
     <div class="wrap">
       <div class="cta reveal">
-        <div><h2 class="disp">Stop watching hours.<br><span class="hl">Start posting.</span></h2><p>Up to 10 clips per video. Runs on your machine. Pay once.</p></div>
-        <button class="btn" onclick="openBuy()">Get FLIC — <span data-price="short">$32.99</span> →</button>
+        <div><h2 class="disp">Stop scrubbing episodes.<br><span class="hl">Start posting paid clips.</span></h2><p>Ten clips per episode, each one checked against the brief. Runs on your Mac. Pay once.</p></div>
+        <button class="btn" onclick="openBuy()">Get FLIC — <span data-price="short">CA$24.99</span> one-time →</button>
       </div>
     </div>
   </section>
@@ -376,23 +459,30 @@ footer .tag{margin-top:12px;display:block}
     <div class="foot">
       <div>
         <a href="#top" class="logo" aria-label="FLIC" id="footLogo"></a>
-        <span class="k tag">Faceless · Local · Infinite · Clips</span>
+        <span class="k tag">Campaign-ready clips · On your Mac</span>
       </div>
       <div class="foot-links">
-        <a href="#how">How it works</a><a href="#who">Who it's for</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="terms.html">Terms</a>
+        <a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="guide/">Guide</a><a href="download/">Download</a><a href="terms.html">Terms</a>
       </div>
     </div>
     <div class="copyr">© 2026 FLIC · Jano Prestige Flow · Hamilton, Ontario</div>
   </div>
 </footer>
 
+<div class="stick" aria-hidden="true"><button class="btn" onclick="openBuy()">Get FLIC — <span data-price="short">CA$24.99</span> one-time →</button></div>
+
 <div id="buyModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="buyTitle" aria-hidden="true">
   <div class="modal-card">
     <button class="modal-close" onclick="closeBuy()" aria-label="Close">×</button>
     <h3 id="buyTitle">Before you buy</h3>
-    <p>FLIC is a one-time <b data-price="modal">$32.99 USD</b> purchase, delivered through Whop. All sales are final. By continuing you agree to the <a href="terms.html" target="_blank" rel="noopener">terms</a>.</p>
-    <label class="agree"><input type="checkbox" id="agreeChk"/> I've read the requirements and agree to the terms.</label>
-    <a id="whopBtn" class="btn disabled" href="https://whop.com/getflic/flicclips/" target="_blank" rel="noopener" aria-disabled="true">Continue to checkout →</a>
+    <p>FLIC is a one-time <b data-price="modal">CA$24.99 (about US$18)</b> purchase, delivered through Whop. All sales are final, so check these first:</p>
+    <ul>
+      <li>Mac with Apple Silicon (M1 or newer), macOS 14+</li>
+      <li>About 20 GB free and internet for the install</li>
+      <li>Clips you post still have to follow each campaign's posting rules</li>
+    </ul>
+    <label class="agree"><input type="checkbox" id="agreeChk"/> I've checked the requirements and agree to the <a href="terms.html" target="_blank" rel="noopener">terms</a>.</label>
+    <a id="whopBtn" class="btn disabled" href="https://whop.com/getflic/flicclips/" target="_blank" rel="noopener" aria-disabled="true">Continue to Whop checkout →</a>
   </div>
 </div>
 
@@ -406,7 +496,7 @@ fetch('logo.svg').then(function(r){return r.text()}).then(function(svg){document
   var tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}
   var ca=/^America\/(Toronto|Vancouver|Edmonton|Calgary|Winnipeg|Halifax|St_Johns|Regina|Moncton|Whitehorse|Yellowknife|Iqaluit|Thunder_Bay|Nipigon|Rainy_River|Atikokan|Glace_Bay|Goose_Bay|Blanc-Sablon|Dawson|Dawson_Creek|Fort_Nelson|Creston|Swift_Current|Cambridge_Bay|Rankin_Inlet|Resolute|Inuvik|Montreal)$/.test(tz)||/-CA\b/i.test(navigator.language||'');
   if(!ca)return;
-  var p={big:'$44.99',note:'CAD · one-time · no subscription',short:'$44.99 CAD',modal:'$44.99 CAD'};
+  var p={big:'$24.99',note:'CAD · one-time · no subscription',short:'$24.99 CAD',modal:'$24.99 CAD'};
   document.querySelectorAll('[data-price]').forEach(function(el){var k=el.getAttribute('data-price');if(p[k])el.textContent=p[k];});
 })();
 
@@ -422,10 +512,10 @@ if(RM||!('IntersectionObserver' in window)){document.querySelectorAll('.reveal')
 else{var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}})},{threshold:.08,rootMargin:'0px 0px -4% 0px'});
   document.querySelectorAll('.reveal').forEach(function(e){io.observe(e)});}
 
-/* phone captions: word-by-word pop, cycling hook lines */
+/* phone captions: word-by-word pop, cycling real-style hook lines */
 (function(){
   var cap=document.getElementById('cap');if(!cap)return;
-  var lines=[['STOP','TRADING','*TIME*'],['NOBODY','*TELLS*','YOU','THIS'],['THE','*REAL*','REASON'],['DO','*THIS*','FIRST'],['IT’S','NOT','*LUCK*']];
+  var lines=[['MORE','TO','*LOSE*','THAN','GAIN'],['FAILURE','IS','A','*DEAD','END*'],['IT','DOESN’T','MAKE','YOU','*STRONGER*'],['LEARN','FROM','THE','*DUMB*','ONES'],['SELF-ESTEEM','IS','HOW','*OTHERS*','SEE','YOU']];
   var i=0;
   function show(){
     var words=lines[i%lines.length];i++;cap.innerHTML='';
