@@ -23,14 +23,15 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
 <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32"/>
 <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
-<link rel="preload" as="image" href="media/hero-poster.jpg"/>
+<link rel="preload" as="font" type="font/woff2" href="fonts/bricolage.woff2" crossorigin="anonymous"/>
+<link rel="preload" as="font" type="font/woff2" href="fonts/jakarta.woff2" crossorigin="anonymous"/>
+<link rel="preload" as="image" href="media/hero-poster.jpg" fetchpriority="high"/>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"FLIC","applicationCategory":"MultimediaApplication","operatingSystem":"macOS 14+ (Apple Silicon)","description":"Turns one long video into 10 to 40 vertical, captioned clips and checks each against a Whop clipping campaign's rules. Runs locally.","offers":{"@type":"Offer","price":"24.99","priceCurrency":"CAD","url":"https://whop.com/getflic/flicclips/"}}
 </script>
 <style>
+@font-face{font-family:'Bricolage Grotesque';font-style:normal;font-weight:200 800;font-display:swap;src:url(fonts/bricolage.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:200 800;font-display:swap;src:url(fonts/jakarta.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
   --bg:#09090b;--bg2:#0f0f12;--bg3:#151519;--bg4:#1b1b20;--text:#f4f2ea;--muted:#9b9aa3;--muted2:#6f6e78;
@@ -83,8 +84,8 @@ button{font-family:inherit}
 body.menu .burger span{background:transparent}
 body.menu .burger span::before{top:0;transform:rotate(45deg)}
 body.menu .burger span::after{top:0;transform:rotate(-45deg)}
-.drawer{position:fixed;inset:0;z-index:45;background:var(--bg);display:flex;flex-direction:column;justify-content:center;padding:100px var(--gutter) 40px;opacity:0;pointer-events:none;transition:opacity .35s var(--ease)}
-body.menu .drawer{opacity:1;pointer-events:auto}
+.drawer{position:fixed;inset:0;z-index:45;background:var(--bg);display:flex;flex-direction:column;justify-content:center;padding:100px var(--gutter) 40px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s var(--ease),visibility .35s}
+body.menu .drawer{opacity:1;visibility:visible;pointer-events:auto}
 .drawer a{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(40px,11vw,64px);letter-spacing:-.03em;line-height:1.05;padding:8px 0;border-bottom:1px solid var(--line2);display:flex;justify-content:space-between;align-items:center;transform:translateY(20px);opacity:0;transition:transform .5s var(--ease),opacity .5s var(--ease)}
 .drawer a span{font-size:14px;letter-spacing:.2em;color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;font-weight:700}
 body.menu .drawer a{transform:none;opacity:1}
@@ -180,7 +181,7 @@ section{padding:clamp(72px,8vw,112px) 0;position:relative;z-index:2;scroll-margi
 .num b{color:var(--text)}
 /* clip rail */
 .rail-head{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:14px}
-.rail-head p{color:var(--muted2);font-size:13.5px;max-width:560px}
+.rail-head p{color:var(--muted);font-size:13.5px;max-width:560px}
 .rail-nav{display:flex;gap:8px;flex:none}
 .rail-nav button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--bg2);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s}
 .rail-nav button:hover{background:var(--bg3);border-color:var(--text)}
@@ -204,7 +205,7 @@ section{padding:clamp(72px,8vw,112px) 0;position:relative;z-index:2;scroll-margi
 .clip .mt b small{color:var(--muted);font-size:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700}
 .rail-bar{height:2px;background:var(--line2);border-radius:2px;overflow:hidden;margin-top:2px}
 .rail-bar i{display:block;height:100%;width:20%;background:var(--acc);border-radius:2px;transition:transform .15s linear}
-.rail-note{display:none;color:var(--muted2);font-size:13px;margin-top:16px}
+.rail-note{display:none;color:var(--muted);font-size:13px;margin-top:16px}
 /* why */
 .why{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .card{position:relative;background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:transform .5s var(--ease),border-color .3s}
@@ -256,10 +257,10 @@ footer .tag{margin-top:14px;display:block}
 .foot-links{display:flex;gap:6px 22px;font-size:14px;flex-wrap:wrap}
 .foot-links a{color:var(--muted);padding:11px 0;transition:color .2s}.foot-links a:hover{color:var(--text)}
 .bigword{margin-top:48px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(90px,22vw,320px);letter-spacing:-.06em;line-height:.8;color:transparent;-webkit-text-stroke:1px var(--line);user-select:none;pointer-events:none;overflow:hidden;white-space:nowrap}
-.copyr{color:var(--muted2);font-size:12.5px;margin-top:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.copyr{color:var(--muted);font-size:12.5px;margin-top:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 /* sticky mobile cta */
-.stick{position:fixed;left:0;right:0;bottom:0;z-index:40;display:none;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line2);transform:translateY(110%);transition:transform .4s var(--ease)}
-.stick.show{transform:none}
+.stick{position:fixed;left:0;right:0;bottom:0;z-index:40;display:none;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line2);transform:translateY(110%);visibility:hidden;transition:transform .4s var(--ease),visibility .4s}
+.stick.show{transform:none;visibility:visible}
 .stick .btn{width:100%}
 /* modal */
 .modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);padding:20px}
@@ -533,7 +534,7 @@ footer .tag{margin-top:14px;display:block}
   </div>
 </footer>
 
-<div class="stick" id="stick" aria-hidden="true"><button class="btn" onclick="openBuy()"><span>Get FLIC — <span data-price="short">CA$24.99</span> one-time</span><span class="arr">→</span></button></div>
+<div class="stick" id="stick"><button class="btn" onclick="openBuy()"><span>Get FLIC — <span data-price="short">CA$24.99</span> one-time</span><span class="arr">→</span></button></div>
 
 <div id="buyModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="buyTitle" aria-hidden="true">
   <div class="modal-card">
@@ -591,6 +592,7 @@ fetch('logo.svg').then(function(r){return r.text()}).then(function(svg){$('#navL
 /* nav + menu */
 var nav=$('#nav'),burger=$('#burger'),drawer=$('#drawer');
 window.closeMenu=function(){document.body.classList.remove('menu');burger.setAttribute('aria-expanded','false');drawer.setAttribute('aria-hidden','true');};
+
 burger.addEventListener('click',function(){var on=!document.body.classList.contains('menu');document.body.classList.toggle('menu',on);burger.setAttribute('aria-expanded',String(on));drawer.setAttribute('aria-hidden',String(!on));});
 $$('a',drawer).forEach(function(a){a.addEventListener('click',closeMenu)});
 
