@@ -1,6 +1,7 @@
 #!/bin/bash
 # =============================================================================
-#  Install FLIC — double-click this file.
+#  Install FLIC — paste in Terminal:  curl -fsSL https://flicclips.pages.dev/install.sh | bash
+#  (or run this file with: bash ~/Downloads/Install\ FLIC.command)
 #
 #  Sets up everything FLIC needs on an Apple Silicon Mac (macOS 14 or newer):
 #    Homebrew, ffmpeg, Node, Python, Ollama + its AI model, yt-dlp, the Whisper
@@ -24,7 +25,7 @@ mkdir -p "$(dirname "$LOG")"
 
 bold() { printf '\n\033[1m%s\033[0m\n' "$*"; }
 say()  { printf '  %s\n' "$*"; }
-die()  { printf '\n\033[1;31m  %s\033[0m\n\n' "$*"; printf '  Log: %s\n\n' "$LOG"; read -r -p "  Press Return to close. "; exit 1; }
+die()  { printf '\n\033[1;31m  %s\033[0m\n\n' "$*"; printf '  Log: %s\n\n' "$LOG"; read -r -p "  Press Return to close. " 2>/dev/null < /dev/tty; exit 1; }
 step() { bold "$1"; echo "== $1" >> "$LOG"; }
 run()  { "$@" >> "$LOG" 2>&1; }
 
@@ -48,7 +49,7 @@ if [ -f "$FLIC_DIR/.license" ]; then
 fi
 if [ -z "$KEY" ]; then
   say "Your license key is on your Whop purchase page (Whop → your FLIC order → License key)."
-  read -r -p "  Paste your license key: " KEY
+  read -r -p "  Paste your license key: " KEY < /dev/tty
   KEY="$(printf '%s' "$KEY" | tr -d '[:space:]')"
 fi
 [ -n "$KEY" ] || die "No license key entered."
@@ -154,4 +155,4 @@ say "How to use it: the guide is opening now (also at ~/FLIC/input/README.html).
 say "Short version: drop a video + brief.txt into ~/FLIC/input and FLIC does the rest."
 echo
 open "$FLIC_DIR/input/README.html"
-read -r -p "  Press Return to close. "
+read -r -p "  Press Return to close. " 2>/dev/null < /dev/tty
